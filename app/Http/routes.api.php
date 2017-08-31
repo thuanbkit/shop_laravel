@@ -20,6 +20,8 @@ $api->version('v1', function ($api) {
              'as' => 'authenticate',
              'uses' => 'AuthenticateController@authenticate'
             ]);
+
+            $api->resource('product','ProductController');
         });
     });
 });

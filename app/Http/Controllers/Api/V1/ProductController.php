@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Jobs\SendReminderEmail;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Product;
 class ProductController extends Controller
 {
     /**
@@ -37,7 +38,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only(['name','description','categories_id']);
+        $product = Product::create($data);
+        $this->dispatch(new SendReminderEmail());
+        return response()->json($product);
+
     }
 
     /**
